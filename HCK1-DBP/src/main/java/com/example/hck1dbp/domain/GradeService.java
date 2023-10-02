@@ -19,27 +19,11 @@ public class GradeService {
         this.gradeRepository = gradeRepository;
     }
 
-    void saveNewGrades(Alumno alumno) {
-        List<Grade> grades = alumno.getGrades();
-        for (int i = 0; i < grades.size(); i++) {
-            for (int j = i + 1; j < grades.size(); j++) {
-                if (grades.get(i).equals(grades.get(j))) {
-                    grades.remove(j);
-                    j--;
-                }
-            }
-            grades.get(i).setSeller(alumno);
-            gradeRepository.save(grades.get(i));
-        }
-
-        alumno.setGrades(grades);
-    }
-
     public List<Grade> getAllGrades() {
         return gradeRepository.findAll();
     }
 
-    public Optional<Alumno> getGradeById(Long id) {
-        return alumnoRepository.findById(id);
+    public Optional<Grade> getGradeById(Long id) {
+        return gradeRepository.findById(id);
     }
 }
