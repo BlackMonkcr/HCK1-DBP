@@ -37,10 +37,6 @@ public class GradeController {
     @GetMapping("/alumno/{id}")
     ResponseEntity<List<Grade>> getGradesOfAlumno(@PathVariable Long id) {
         Optional<Alumno> alumnoOptional = alumnoService.getAlumnoById(id);
-        if (alumnoOptional.isPresent()) {
-            return new ResponseEntity<>(alumnoOptional.get().getGrades(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return alumnoOptional.map(alumno -> new ResponseEntity<>(alumno.getGrades(), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 }
